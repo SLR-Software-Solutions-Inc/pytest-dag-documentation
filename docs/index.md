@@ -21,3 +21,15 @@ Source code repository:
 - Automatic xdist guard when `-n` is active
 
 See the other pages for installation, usage, and troubleshooting details.
+
+```{toctree}
+:maxdepth: 2
+:caption: Contents
+
+installation
+usage
+comparison
+license-validation
+troubleshooting
+readthedocs-separate-repo
+```
