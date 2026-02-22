@@ -59,7 +59,7 @@ Documentation: https://<your-docs-domain>/en/latest/
 If you use the default RTD-hosted domain, it may be something like:
 
 ```text
-https://pytest-dag-documentation.readthedocs-hosted.com/en/latest/
+https://pytest-dag.readthedocs.io/en/latest/
 ```
 
 Use the exact URL shown by Read the Docs after the first successful build.
