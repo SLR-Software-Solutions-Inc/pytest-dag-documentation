@@ -31,5 +31,4 @@ usage
 comparison
 license-validation
 troubleshooting
-readthedocs-separate-repo
 ```

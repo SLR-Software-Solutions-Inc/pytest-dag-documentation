@@ -9,21 +9,8 @@
 
 ## Environment variables
 
-- `PYTEST_DAG_LICENSE_ENDPOINT`
 - `PYTEST_DAG_LICENSE_KEY`
 - `PYTEST_DAG_DEBUG=1`
-- `PYTEST_DAG_USER_AGENT` (optional override)
-
-## Local backend example
-
-```bash
-export PYTEST_DAG_LICENSE_ENDPOINT=http://127.0.0.1:8003
-export PYTEST_DAG_DEBUG=1
-python -m pytest -v -rs
-```
-
-Use `http://` for a local plain HTTP service. If you use `https://` against a
-non-TLS local server, the backend may log invalid HTTP request warnings.
 
 ## Debug output
 
