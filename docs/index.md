@@ -17,7 +17,7 @@ Source code repository:
 - Cycle detection at collection time
 - Cascading skip behavior (`--dag-block-on`)
 - Optional YAML DAG definitions
-- License validation with debug logging support
+- License activation guidance
 - Automatic xdist guard when `-n` is active
 
 See the other pages for installation, usage, and troubleshooting details.

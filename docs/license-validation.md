@@ -1,22 +1,33 @@
-# License Validation
+# License
 
-`pytest-dag` can validate licensing before test collection starts.
+`pytest-dag` may require a license key before test collection starts,
+depending on the current license policy.
 
-## Endpoints used by the plugin
+## Provide your license key
 
-- `GET /licenses/feature-flag`
-- `POST /licenses/validate` (only when paywall is enabled)
-
-## Environment variables
+You can provide the key using any of these methods:
 
 - `PYTEST_DAG_LICENSE_KEY`
-- `PYTEST_DAG_DEBUG=1`
+- `--pytest-dag-license-key`
+- `--pytest-dag-license-key-file`
 
-## Debug output
+### Example: environment variable
 
-With `PYTEST_DAG_DEBUG=1`, the plugin logs:
+```bash
+export PYTEST_DAG_LICENSE_KEY=pd-XXXX-XXXX-XXXX-XXXX
+python -m pytest -v -rs
+```
 
-- The resolved license endpoint
-- The exact feature-flag and validate URLs
-- Request method and timeout
-- Response status and a short body preview
+### Example: key file
+
+```bash
+pytest --pytest-dag-license-key-file /path/to/key.txt -v -rs
+```
+
+## Purchase or renew
+
+- `https://pytest-dag.slrsoft.ca/licenses/purchase`
+
+## Support
+
+- `support@slrsoft.ca`
