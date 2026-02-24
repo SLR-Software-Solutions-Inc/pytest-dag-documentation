@@ -1,6 +1,6 @@
 project = "pytest-dag"
 author = "SLR Software Solutions Inc."
-copyright = "2026, Narender"
+copyright = "2026, SLR Software Solutions Inc."
 
 extensions = [
     "myst_parser",
