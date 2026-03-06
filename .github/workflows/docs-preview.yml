@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PIP_USER: "0"
+      PIP_CONFIG_FILE: /dev/null
 
     steps:
       - name: Checkout
@@ -20,11 +21,15 @@ jobs:
 
       - name: Install docs dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r docs/requirements.txt
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install -r docs/requirements.txt
 
       - name: Build docs (Sphinx HTML)
-        run: sphinx-build -W --keep-going -b html docs docs/_build/html
+        run: |
+          . .venv/bin/activate
+          sphinx-build -W --keep-going -b html docs docs/_build/html
 
       - name: Upload built site artifact
         if: always()
