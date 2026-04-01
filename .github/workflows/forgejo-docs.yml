@@ -1,0 +1,58 @@
+name: Forgejo Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  docs:
+    if: ${{ github.server_url != 'https://github.com' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build docs
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install -r docs/requirements.txt
+          sphinx-build -W --keep-going -b html docs docs/_build/html
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sphinx-site-preview
+          path: docs/_build/html/
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Trigger Read the Docs build
+        env:
+          READTHEDOCS_WEBHOOK_URL: ${{ secrets.READTHEDOCS_WEBHOOK_URL }}
+        run: |
+          if [ -z "${READTHEDOCS_WEBHOOK_URL}" ]; then
+            echo "READTHEDOCS_WEBHOOK_URL not configured; skipping trigger"
+            exit 0
+          fi
+          python - <<'PY'
+          import os, urllib.request
+          req = urllib.request.Request(
+              os.environ["READTHEDOCS_WEBHOOK_URL"],
+              data=b"{}",
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          with urllib.request.urlopen(req, timeout=30) as r:
+              print("Read the Docs trigger status:", r.status)
+          PY
+
