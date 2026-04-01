@@ -1,7 +1,7 @@
-# License
+# License Setup
 
-`pytest-dag` may require a license key before test collection starts,
-depending on the current license policy.
+`pytest-dag` may require a license key before test collection starts.
+Use one of the supported options below in local development or CI.
 
 ## Provide your license key
 
