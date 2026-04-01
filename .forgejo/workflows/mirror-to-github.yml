@@ -1,0 +1,25 @@
+name: Mirror To GitHub
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push main to GitHub
+        env:
+          GH_MIRROR_TOKEN: ${{ secrets.GH_MIRROR_TOKEN }}
+        run: |
+          git config user.name "forgejo-mirror-bot"
+          git config user.email "noreply@slrsoft.ca"
+          git remote add github "https://x-access-token:${GH_MIRROR_TOKEN}@github.com/SLR-Software-Solutions-Inc/pytest-dag-documentation.git"
+          git push github HEAD:main
+
