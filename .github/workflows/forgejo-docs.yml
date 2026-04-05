@@ -53,6 +53,7 @@ jobs:
       - name: Trigger Read the Docs build
         env:
           READTHEDOCS_WEBHOOK_URL: ${{ secrets.READTHEDOCS_WEBHOOK_URL }}
+          READTHEDOCS_WEBHOOK_SECRET: ${{ secrets.READTHEDOCS_WEBHOOK_SECRET }}
         run: |
           set -euo pipefail
           export HOME="$PWD/.ci-home"
@@ -63,13 +64,18 @@ jobs:
             *) echo "READTHEDOCS_WEBHOOK_URL not configured or invalid; skipping trigger"; exit 0 ;;
           esac
           uv run --python .ci-venv/bin/python python - <<'PY'
-          import os, urllib.request
-          req = urllib.request.Request(
-              os.environ["READTHEDOCS_WEBHOOK_URL"],
-              data=b"{}",
-              headers={"Content-Type": "application/json"},
-              method="POST",
-          )
+          import hashlib, hmac, json, os, urllib.request
+
+          url    = os.environ["READTHEDOCS_WEBHOOK_URL"]
+          secret = os.environ.get("READTHEDOCS_WEBHOOK_SECRET", "").strip()
+          payload = b"{}"
+
+          headers = {"Content-Type": "application/json"}
+          if secret:
+              sig = hmac.new(secret.encode(), payload, hashlib.sha256).hexdigest()
+              headers["X-Hub-Signature-256"] = f"sha256={sig}"
+
+          req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
           with urllib.request.urlopen(req, timeout=30) as r:
               print("Read the Docs trigger status:", r.status)
           PY
