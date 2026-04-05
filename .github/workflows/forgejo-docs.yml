@@ -58,10 +58,10 @@ jobs:
           export HOME="$PWD/.ci-home"
           export PATH="$PWD/.ci-tools/uv:${HOME}/.local/bin:${PATH}"
 
-          if [ -z "${READTHEDOCS_WEBHOOK_URL}" ]; then
-            echo "READTHEDOCS_WEBHOOK_URL not configured; skipping trigger"
-            exit 0
-          fi
+          case "${READTHEDOCS_WEBHOOK_URL:-}" in
+            https://*) ;;
+            *) echo "READTHEDOCS_WEBHOOK_URL not configured or invalid; skipping trigger"; exit 0 ;;
+          esac
           uv run --python .ci-venv/bin/python python - <<'PY'
           import os, urllib.request
           req = urllib.request.Request(
