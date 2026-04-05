@@ -11,7 +11,7 @@ reason.
 
 - DAG-based test ordering
 - Cycle detection at collection time
-- Cascading skip behavior (`--dag-block-on`)
+- Cascading skip behavior (`--dag-block-on-outcomes`)
 - Optional YAML DAG definitions
 - License-gated usage when required
 - xdist safety guard when `-n` is active
