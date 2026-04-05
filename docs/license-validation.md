@@ -26,7 +26,7 @@ pytest --pytest-dag-license-key-file /path/to/key.txt -v -rs
 
 ## Purchase or renew
 
-- `https://pytest-dag.slrsoft.ca/licenses/purchase`
+- `https://slrsoft.ca/app/license/purchase?product=pytest-dag`
 
 ## Support
 
