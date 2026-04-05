@@ -24,6 +24,7 @@ See the pages below for installation, setup, license usage, and troubleshooting.
 
 installation
 usage
+comparison
 license-validation
 troubleshooting
 ```
