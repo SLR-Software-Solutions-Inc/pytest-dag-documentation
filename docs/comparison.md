@@ -61,7 +61,7 @@ These tools solve adjacent problems, and they can be useful in different cases.
 - Topological ordering from declared dependencies
 - Cycle detection at collection time
 - Missing dependency handling (strict vs lenient)
-- Cascading skip behavior configurable via `--dag-block-on`
+- Cascading skip behavior configurable via `--dag-block-on-outcomes`
 - Clear skip reasons naming the blocker and outcome
 
 ## Practical decision guide
