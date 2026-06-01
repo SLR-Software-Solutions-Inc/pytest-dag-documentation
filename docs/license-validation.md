@@ -11,10 +11,28 @@ get started. A pro key unlocks additional capabilities.
 | YAML DAG file | ✓ | ✓ |
 | Cross-file dependencies | ✓ | ✓ |
 | Max DAG nodes | 25 | Unlimited |
-| Max DAG depth | 3 | Unlimited |
+| Max DAG depth | 5 | Unlimited |
 | Parallel workers (`--dag-workers`) | — | ✓ |
 | HTML report (`--dag-report-out`) | — | ✓ |
 | Run banner | shown | silent |
+
+## Report preview (Pro)
+
+The pro tier generates an interactive single-page HTML report after every run.
+
+**Overview** — pass/fail/skip stat cards, segmented progress bar, failure list:
+
+![Report Overview](_static/screenshots/report-overview.png)
+
+**DAG Graph** — pan/zoom dependency flowchart, colour-coded by outcome:
+
+![DAG Graph](_static/screenshots/report-dag.png)
+
+**Results** — filterable, searchable, sortable test table with timing and dependency info:
+
+![Results](_static/screenshots/report-results.png)
+
+---
 
 ## Free tier
 
@@ -26,7 +44,7 @@ pytest
 ```
 
 A one-line banner is printed on each run to indicate the free tier. Tests run
-sequentially. DAGs up to 25 nodes and depth 3 are supported.
+sequentially. DAGs up to 25 nodes and depth 5 are supported.
 
 ## Pro tier
 
