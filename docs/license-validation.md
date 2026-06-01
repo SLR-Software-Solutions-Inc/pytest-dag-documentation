@@ -11,7 +11,7 @@ get started. A pro key unlocks additional capabilities.
 | YAML DAG file | ✓ | ✓ |
 | Cross-file dependencies | ✓ | ✓ |
 | Max DAG nodes | 25 | Unlimited |
-| Max DAG depth | 5 | Unlimited |
+| Max DAG depth | 7 | Unlimited |
 | Parallel workers (`--dag-workers`) | — | ✓ |
 | HTML report (`--dag-report-out`) | — | ✓ |
 | Run banner | shown | silent |
@@ -44,7 +44,7 @@ pytest
 ```
 
 A one-line banner is printed on each run to indicate the free tier. Tests run
-sequentially. DAGs up to 25 nodes and depth 5 are supported.
+sequentially. DAGs up to 25 nodes and depth 7 are supported.
 
 ## Pro tier
 

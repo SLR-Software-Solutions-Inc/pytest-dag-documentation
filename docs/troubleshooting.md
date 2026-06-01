@@ -24,7 +24,7 @@ plugin works identically on air-gapped machines and behind firewalls.
 
 ## "Free tier: DAG exceeds node/depth limit"
 
-The free tier supports up to 25 DAG nodes and depth 5. If your suite exceeds
+The free tier supports up to 25 DAG nodes and depth 7. If your suite exceeds
 these limits:
 
 - Split the suite into smaller independent DAGs, or
