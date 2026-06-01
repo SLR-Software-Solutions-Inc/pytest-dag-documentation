@@ -18,10 +18,9 @@ used.
 
 ## Does pytest-dag make network calls?
 
-No. License verification is done entirely locally using an embedded Ed25519
-public key. No HTTP requests are made at any point — not at startup, not
-during the run, and not at teardown. The plugin works identically on
-air-gapped machines and behind firewalls.
+No. License verification is done entirely locally — no HTTP requests are made
+at any point, not at startup, not during the run, and not at teardown. The
+plugin works identically on air-gapped machines and behind firewalls.
 
 ## "Free tier: DAG exceeds node/depth limit"
 
@@ -33,15 +32,11 @@ these limits:
 
 ## Pro features not activating (HTML report / workers)
 
-Verify the key is set and valid:
+Verify the key is set correctly:
 
 ```bash
-PYTEST_DAG_LICENSE_KEY=pdv2_... pytest --dag-report-out report.html -v
+PYTEST_DAG_LICENSE_KEY=<your-license-key> pytest --dag-report-out report.html -v
 ```
 
-If the key is expired or invalid, the plugin silently falls back to free tier.
-Run with `PYTEST_DAG_DEBUG=1` to see the exact tier resolved:
-
-```bash
-PYTEST_DAG_DEBUG=1 pytest -q 2>&1 | grep "tier"
-```
+If the key is expired or invalid the plugin falls back to free tier silently.
+Contact `support@slrsoft.ca` if a valid key is not activating pro features.

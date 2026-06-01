@@ -35,14 +35,14 @@ Set the license key via environment variable, CLI flag, or key file.
 ### Environment variable (recommended for CI)
 
 ```bash
-export PYTEST_DAG_LICENSE_KEY=pdv2_<payload>.<signature>
+export PYTEST_DAG_LICENSE_KEY=<your-license-key>
 pytest --dag-report-out report.html --dag-workers 4
 ```
 
 ### CLI flag
 
 ```bash
-pytest --pytest-dag-license-key pdv2_<payload>.<signature>
+pytest --pytest-dag-license-key <your-license-key>
 ```
 
 ### Key file
@@ -70,9 +70,9 @@ env:
 
 ## How verification works
 
-Keys are verified **locally** using an embedded Ed25519 public key. No
-network calls are made at any point — the plugin works identically on
-air-gapped machines, behind firewalls, and in offline CI environments.
+Keys are verified **locally** — no network calls are made at any point.
+The plugin works identically on air-gapped machines, behind firewalls,
+and in offline CI environments.
 
 ## Support
 
