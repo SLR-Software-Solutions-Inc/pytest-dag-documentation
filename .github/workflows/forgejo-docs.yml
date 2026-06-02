@@ -33,6 +33,7 @@ jobs:
             WORKDIR="$PWD/repo"
           fi
           cd "${WORKDIR}"
+          echo "DOCS_WORKDIR=$WORKDIR" >> "${GITHUB_ENV:-/dev/null}"
 
           export HOME="$PWD/.ci-home"
           mkdir -p "${HOME}"
@@ -71,6 +72,7 @@ jobs:
           READTHEDOCS_WEBHOOK_SECRET: ${{ secrets.READTHEDOCS_WEBHOOK_SECRET }}
         run: |
           set -euo pipefail
+          cd "${DOCS_WORKDIR}"
           export HOME="$PWD/.ci-home"
           export PATH="$PWD/.ci-tools/uv:${HOME}/.local/bin:${PATH}"
 
