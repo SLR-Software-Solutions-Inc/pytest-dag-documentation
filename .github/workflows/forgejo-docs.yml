@@ -10,14 +10,30 @@ on:
 jobs:
   docs:
     if: ${{ github.server_url != 'https://github.com' }}
-    runs-on: ubuntu-latest
+    runs-on: linux
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Bootstrap uv and build docs
         run: |
           set -euxo pipefail
+
+          WORKDIR=""
+          if [ -f docs/conf.py ]; then
+            WORKDIR="$PWD"
+          elif [ -n "${GITHUB_WORKSPACE:-}" ] && [ -f "${GITHUB_WORKSPACE}/docs/conf.py" ]; then
+            WORKDIR="${GITHUB_WORKSPACE}"
+          else
+            rm -rf repo
+            REPO_URL="${GITHUB_SERVER_URL:-https://git.slrsoft.ca}/${GITHUB_REPOSITORY}.git"
+            if [ -n "${GITHUB_TOKEN:-}" ]; then
+              HOST_PATH="${REPO_URL#https://}"
+              git clone --depth=1 "https://oauth2:${GITHUB_TOKEN}@${HOST_PATH}" repo
+            else
+              git clone --depth=1 "${REPO_URL}" repo
+            fi
+            WORKDIR="$PWD/repo"
+          fi
+          cd "${WORKDIR}"
+          echo "DOCS_WORKDIR=$WORKDIR" >> "${GITHUB_ENV:-/dev/null}"
 
           export HOME="$PWD/.ci-home"
           mkdir -p "${HOME}"
@@ -56,6 +72,7 @@ jobs:
           READTHEDOCS_WEBHOOK_SECRET: ${{ secrets.READTHEDOCS_WEBHOOK_SECRET }}
         run: |
           set -euo pipefail
+          cd "${DOCS_WORKDIR}"
           export HOME="$PWD/.ci-home"
           export PATH="$PWD/.ci-tools/uv:${HOME}/.local/bin:${PATH}"
 

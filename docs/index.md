@@ -13,8 +13,8 @@ reason.
 - Cycle detection at collection time
 - Cascading skip behavior (`--dag-block-on-outcomes`)
 - Optional YAML DAG definitions
-- License-gated usage when required
-- xdist safety guard when `-n` is active
+- Freemium model — works out of the box, pro tier unlocks advanced features
+- xdist safety guard on free tier
 
 See the pages below for installation, setup, license usage, and troubleshooting.
 

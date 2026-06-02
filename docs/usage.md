@@ -56,12 +56,14 @@ the same suite.
 
 ## CLI reference
 
-| Option | Default | Description |
-| ------ | ------- | ----------- |
-| `--dag-block-on-outcomes OUTCOMES` | `fail` | Comma-separated outcomes that block dependents: `fail`, `skip`, `xfail`, `error` |
-| `--dag-print-graph` | off | Print DAG order and edges after collection |
-| `--pytest-dag-license-key KEY` | unset | Provide license key on the command line |
-| `--pytest-dag-license-key-file PATH` | unset | Read license key from a file |
+| Option | Tier | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `--dag-block-on-outcomes OUTCOMES` | Free+ | `fail` | Comma-separated outcomes that block dependents: `fail`, `skip`, `xfail`, `error` |
+| `--dag-print-graph` | Free+ | off | Print DAG order and edges after collection |
+| `--pytest-dag-license-key KEY` | — | unset | Provide license key on the command line |
+| `--pytest-dag-license-key-file PATH` | — | unset | Read license key from a file |
+| `--dag-workers N` | **Pro** | 1 | Run DAG-independent tests in parallel with N workers |
+| `--dag-report-out PATH` | **Pro** | unset | Write an interactive HTML DAG report to PATH |
 
 Examples:
 
@@ -113,10 +115,38 @@ SKIPPED [1] test_demo.py:104: feature not yet implemented
 The `pytest-dag: blocked by` prefix identifies skips triggered by the
 dependency graph, distinct from skips in your own test code.
 
+## HTML report (Pro)
+
+Generate an interactive single-page report after a run:
+
+```bash
+pytest --dag-report-out report.html
+```
+
+The report includes:
+- **Overview** — pass/fail/skip counts and animated stat cards
+- **DAG Graph** — interactive pan/zoom flowchart of node dependencies, colour-coded by outcome
+- **Results** — filterable, searchable, sortable test table
+
+## Parallel workers (Pro)
+
+Run tests whose DAG dependencies are already satisfied in parallel:
+
+```bash
+pytest --dag-workers 4
+```
+
+DAG ordering is enforced — dependents still wait for their dependencies to
+complete before starting.
+
 ## pytest-xdist compatibility
 
-`pytest-dag` is not compatible with `pytest-xdist` parallel execution (`-n`).
-When `-n` is detected at startup, the plugin automatically disables xdist and
-prints a warning. Tests run sequentially with full DAG enforcement.
+On the **free tier**, `pytest-dag` disables `pytest-xdist` parallel execution
+(`-n`) automatically when detected and prints a warning. Tests run
+sequentially with full DAG enforcement.
 
-If xdist is installed but `-n` is not passed, behaviour is unchanged.
+On the **pro tier**, `--dag-workers N` provides native DAG-aware parallelism
+and xdist is not disabled.
+
+If xdist is installed but `-n` is not passed, behaviour is unchanged on both
+tiers.
