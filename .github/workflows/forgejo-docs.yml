@@ -10,11 +10,18 @@ on:
 jobs:
   docs:
     if: ${{ github.server_url != 'https://github.com' }}
-    runs-on: linux
+    runs-on: slr-prod-ci
+    container: python:3.12-bookworm
     steps:
       - name: Bootstrap uv and build docs
         run: |
           set -euxo pipefail
+
+          if ! command -v git >/dev/null 2>&1; then
+            apt-get update
+            apt-get install -y --no-install-recommends git ca-certificates curl
+            rm -rf /var/lib/apt/lists/*
+          fi
 
           WORKDIR=""
           if [ -f docs/conf.py ]; then
