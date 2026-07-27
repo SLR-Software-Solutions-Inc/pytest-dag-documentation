@@ -11,7 +11,8 @@ jobs:
   docs:
     if: ${{ github.server_url != 'https://github.com' }}
     runs-on: slr-prod-ci
-    container: python:3.12-bookworm
+    # JavaScript actions execute inside the job container, so Node must be present.
+    container: node:22-bookworm
     steps:
       - name: Bootstrap uv and build docs
         run: |

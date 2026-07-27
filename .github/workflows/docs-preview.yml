@@ -8,7 +8,8 @@ jobs:
   build-docs:
     name: Build Sphinx docs
     runs-on: ${{ github.server_url == 'https://github.com' && 'ubuntu-latest' || 'slr-prod-ci' }}
-    container: python:3.12-bookworm
+    # JavaScript actions execute inside the job container, so Node must be present.
+    container: node:22-bookworm
     steps:
       - name: Bootstrap uv, install dependencies, and build docs
         run: |
