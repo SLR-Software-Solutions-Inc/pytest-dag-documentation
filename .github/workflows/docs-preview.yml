@@ -7,11 +7,19 @@ on:
 jobs:
   build-docs:
     name: Build Sphinx docs
-    runs-on: linux
+    runs-on: ${{ github.server_url == 'https://github.com' && 'ubuntu-latest' || 'slr-prod-ci' }}
+    # JavaScript actions execute inside the job container, so Node must be present.
+    container: node:22-bookworm
     steps:
       - name: Bootstrap uv, install dependencies, and build docs
         run: |
           set -euxo pipefail
+
+          if ! command -v git >/dev/null 2>&1; then
+            apt-get update
+            apt-get install -y --no-install-recommends git ca-certificates curl
+            rm -rf /var/lib/apt/lists/*
+          fi
 
           WORKDIR=""
           if [ -f docs/conf.py ]; then
